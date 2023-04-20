@@ -1,0 +1,1 @@
+# stonex-cms-amqp-core-tests
