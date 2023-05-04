@@ -25,7 +25,6 @@ target_include_directories(stonex-cms-amqp-tests
 
 target_link_libraries(stonex-cms-amqp-tests
 	CONAN_PKG::stonex-cms-amqp-test-cases
-	CONAN_PKG::stonex-cms-amqp-test-framework
 	secur32 
 	crypt32 
 	Ws2_32

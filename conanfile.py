@@ -3,7 +3,7 @@ import os
 from conans import ConanFile, CMake, tools
 
 def get_verion_tag():
-    git = tools.Git("stonex-cms-amqp-test-framework")
+    git = tools.Git("stonex-cms-amqp-core-tests")
     try:
         return "%s" % (git.get_tag())
     except Exception as e:
