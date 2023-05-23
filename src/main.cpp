@@ -22,17 +22,20 @@
 #include <TestSuite/TestRunner.h>
 #include <TestSuite/TestFunctionRegister.h>
 #include <TestSuite/TestCasePerformer.h>
-#include <Notifier/StdOutTestObserver.h>
-#include <Configuration/ConfigurationParser.h>
-#include <VerifierFactory/CompoundVerifierFactory.h>
-#include <MessageDecorator/MessageDecoratorFactory.h>
-#include <TestEventWrapperFactory/EventWrapperCoreFactory.h>
-#include <VerifyingReceiverFactory/VerifyingReceiverFactory.h>
+#include <ConfigurationParser/TestSuiteJsonConfigParser.h>
+
 #include <Cases/proton-cpp-client-connection-tests.h>
 #include <Cases/proton-cpp-client-session-tests.h>
 #include <Cases/proton-cpp-client-tests.h>
 
-#include "common/MockMessgeSenderFactory.h"
+#include <MessageSender/TestMessageSenderFactory.h>
+
+#include <MessageReceiver/MessageReceiverFactory.h>
+
+#include <Log4CxxLogger/Log4CxxLogger.h>
+#include <Notifier/StdOutTestObserver.h>
+
+//temporary
 
 
 int main(int argc, char** argv)
@@ -55,23 +58,19 @@ int main(int argc, char** argv)
 	testFunctionRegister.registerTestFunction("test_stop_and_restart_connection", test_stop_and_restart_connection);
 	testFunctionRegister.registerTestFunction("test_create_connection", test_create_connection);
 	
-	interoperability_tests::config::parser::ConfigurationParser parser(argv[1]);
+	TestSuiteJsonConfigParser parser(argv[1]);
 	
-	CompoundVerifierFactory verifierFactory(new FieldVerifierFactory());
 	
 	StdOutTestObserver testResultObserver;
 
+	stonex::messaging::test::TestSenderFactory _senderFactory;
+	MessageReceiverFactory _receiverFactory;
 
-	ExceptionListenerFactory exListenerFactory;
-
-	MessageDecoratorFactory messageDecoratorFactory;
-	EventWrapperCoreFactory ewf;
-
-	VerifyingReceiverFactory receiverFactory(&verifierFactory, &ewf);
-
-	MockMessgeSenderFactory messageSenderFactory(&messageDecoratorFactory);
 	
-	TestRunner tr(parser, testFunctionRegister, receiverFactory, messageSenderFactory, verifierFactory, &testResultObserver, exListenerFactory);
+	std::shared_ptr<StonexLogger> logger = std::make_shared<Log4CxxLogger>();
+	logger->configure("logger.properties");
+
+	TestRunner tr(parser, testFunctionRegister, _receiverFactory, _senderFactory, &testResultObserver, logger);
 
 	tr.run();
 
