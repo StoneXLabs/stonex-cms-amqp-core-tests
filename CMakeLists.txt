@@ -9,8 +9,8 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 20)
 
 
-file(GLOB sourceFiles ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/src/common/*.cpp)
-file(GLOB headerFiles ${PROJECT_SOURCE_DIR}/include/*.h ${PROJECT_SOURCE_DIR}/include/common/*.h)
+file(GLOB sourceFiles ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/src/*.cpp)
+file(GLOB headerFiles ${PROJECT_SOURCE_DIR}/include/*.h ${PROJECT_SOURCE_DIR}/include/*.h)
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${sourceFiles} ${headerFiles})
 
@@ -31,4 +31,6 @@ target_link_libraries(stonex-cms-amqp-tests
 	)
 
 
+	
 
+configure_file(${PROJECT_SOURCE_DIR}/config/core_test.config ${CMAKE_CURRENT_BINARY_DIR}/bin/core_test.config COPYONLY)
