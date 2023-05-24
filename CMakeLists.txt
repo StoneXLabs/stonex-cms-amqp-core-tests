@@ -30,7 +30,7 @@ target_link_libraries(stonex-cms-amqp-tests
 	Ws2_32
 	)
 
-
-	
-
 configure_file(${PROJECT_SOURCE_DIR}/config/core_test.config ${CMAKE_CURRENT_BINARY_DIR}/bin/core_test.config COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/config/core_messages_test.config ${CMAKE_CURRENT_BINARY_DIR}/bin/core_messages_test.config COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/config/logger.properties ${CMAKE_CURRENT_BINARY_DIR}/bin/logger.properties COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/config/logger.xml ${CMAKE_CURRENT_BINARY_DIR}/bin/logger.xml COPYONLY)
